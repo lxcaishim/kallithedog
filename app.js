@@ -33,15 +33,6 @@
       var el = document.getElementById(ids[i]);
       if (!el) continue;
       el.href = urls;
-      if (!ca) {
-        el.setAttribute("aria-disabled", "true");
-        el.style.opacity = "0.72";
-        el.setAttribute("tabindex", "-1");
-      } else {
-        el.removeAttribute("aria-disabled");
-        el.style.opacity = "";
-        el.removeAttribute("tabindex");
-      }
     }
   }
 
@@ -74,7 +65,6 @@
     var btn = document.getElementById("copy-ca-hero");
     if (!btn) return;
     btn.textContent = ca ? "CA: " + shortenCa(ca) : "CA: TBD";
-    btn.disabled = !ca;
   }
 
   function feedbackTarget(el) {
@@ -83,16 +73,40 @@
     return span || el;
   }
 
+  function tbdCopyText(feedbackEl) {
+    if (!feedbackEl) return "";
+    var fromAttr = (feedbackEl.getAttribute("data-tbd-copy") || "").trim();
+    if (fromAttr) return fromAttr;
+    return (
+      "Kalli mint (CA) is not live on this page yet — check X for updates: " +
+      X_URL
+    );
+  }
+
   function copyContract(ca, feedbackEl, okText, failText) {
     var target = feedbackTarget(feedbackEl);
     if (!ca) {
-      if (target) {
-        var prev = target.textContent;
-        target.textContent = "Set CA in app.js";
-        setTimeout(function () {
-          target.textContent = prev;
-        }, 1500);
-      }
+      var toCopy = tbdCopyText(feedbackEl);
+      navigator.clipboard.writeText(toCopy).then(
+        function () {
+          if (target) {
+            var p = target.textContent;
+            target.textContent = okText || "Copied!";
+            setTimeout(function () {
+              target.textContent = p;
+            }, 1500);
+          }
+        },
+        function () {
+          if (target) {
+            var p = target.textContent;
+            target.textContent = failText || "Couldn't copy";
+            setTimeout(function () {
+              target.textContent = p;
+            }, 1500);
+          }
+        }
+      );
       return;
     }
     navigator.clipboard.writeText(ca).then(

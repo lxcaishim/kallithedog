@@ -1062,13 +1062,6 @@ a.buy-card:active {
   cursor: not-allowed;
 }
 
-#buy-link[aria-disabled="true"],
-#pump-link[aria-disabled="true"],
-#footer-pump-link[aria-disabled="true"] {
-  pointer-events: none;
-  cursor: not-allowed;
-}
-
 .btn-icon-flower {
   color: rgba(255, 255, 255, 0.95);
   flex-shrink: 0;
