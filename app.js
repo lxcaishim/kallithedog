@@ -14,11 +14,11 @@
   }
 
   function dexEmbedUrl(ca) {
-    var encoded = encodeURIComponent(ca);
+    var encoded = encodeURIComponent(trimCa(ca));
     return (
       "https://dexscreener.com/solana/" +
       encoded +
-      "?embed=1&theme=dark&trades=0"
+      "?embed=1&theme=dark&trades=0&info=0"
     );
   }
 
@@ -39,17 +39,41 @@
   function initChart(ca) {
     var iframe = document.getElementById("dexscreener-embed");
     var placeholder = document.getElementById("chart-placeholder");
+    var quiet =
+      placeholder && placeholder.querySelector(".chart-placeholder-quiet");
     if (!iframe || !placeholder) return;
 
     if (!ca) {
       iframe.removeAttribute("src");
       iframe.setAttribute("hidden", "");
       placeholder.removeAttribute("hidden");
+      if (quiet) quiet.textContent = "—";
       return;
     }
 
-    placeholder.setAttribute("hidden", "");
-    iframe.removeAttribute("hidden");
+    if (quiet) {
+      quiet.textContent = "Loading chart…";
+    }
+    placeholder.removeAttribute("hidden");
+    iframe.setAttribute("hidden", "");
+
+    var revealed = false;
+    function revealChart() {
+      if (revealed) return;
+      revealed = true;
+      placeholder.setAttribute("hidden", "");
+      iframe.removeAttribute("hidden");
+    }
+
+    var fallbackTimer = window.setTimeout(revealChart, 12000);
+
+    function onFrameLoad() {
+      window.clearTimeout(fallbackTimer);
+      iframe.removeEventListener("load", onFrameLoad);
+      revealChart();
+    }
+
+    iframe.addEventListener("load", onFrameLoad);
     iframe.src = dexEmbedUrl(ca);
   }
 
