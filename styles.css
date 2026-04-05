@@ -1045,6 +1045,13 @@ a.buy-card:active {
   cursor: not-allowed;
 }
 
+#buy-link[aria-disabled="true"],
+#pump-link[aria-disabled="true"],
+#footer-pump-link[aria-disabled="true"] {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 .btn-icon-flower {
   color: rgba(255, 255, 255, 0.95);
   flex-shrink: 0;
@@ -1611,17 +1618,11 @@ a.buy-card:focus-visible {
   display: block;
 }
 
-.footer-github-logo {
-  width: 1.85rem;
-  height: 1.85rem;
-  display: block;
-}
-
 .footer-pump-logo {
-  width: min(152px, 44vw);
-  height: auto;
+  width: 2.25rem;
+  height: 2.25rem;
   display: block;
-  border-radius: 9px;
+  object-fit: contain;
 }
 
 main {
@@ -1645,7 +1646,7 @@ main {
 
   .hero-actions .btn-motion:not(:disabled),
   .nav-pill,
-  #copy-ca-hero,
+  #copy-ca-hero:not(:disabled),
   .buy-card {
     animation: motion-tilt 4.8s ease-in-out infinite;
   }
@@ -1687,7 +1688,7 @@ main {
     animation-delay: 0.45s;
   }
 
-  #copy-ca-hero {
+  #copy-ca-hero:not(:disabled) {
     animation-delay: 0.5s;
   }
 }
@@ -1715,7 +1716,7 @@ main {
 
   .hero-actions .btn-motion,
   .nav-pill,
-  #copy-ca-hero,
+  #copy-ca-hero:not(:disabled),
   .buy-card {
     animation: none !important;
   }

@@ -36,9 +36,11 @@
       if (!ca) {
         el.setAttribute("aria-disabled", "true");
         el.style.opacity = "0.72";
+        el.setAttribute("tabindex", "-1");
       } else {
         el.removeAttribute("aria-disabled");
         el.style.opacity = "";
+        el.removeAttribute("tabindex");
       }
     }
   }
@@ -72,6 +74,7 @@
     var btn = document.getElementById("copy-ca-hero");
     if (!btn) return;
     btn.textContent = ca ? "CA: " + shortenCa(ca) : "CA: TBD";
+    btn.disabled = !ca;
   }
 
   function feedbackTarget(el) {
