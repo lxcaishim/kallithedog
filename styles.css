@@ -958,6 +958,14 @@ code {
   .nav-pill.btn-motion:focus-visible {
     animation: ui-hover-nav-pill 0.5s ease-in-out infinite alternate;
   }
+
+  /* Beat idle motion-tilt (.hero-actions / #copy-ca-hero are more specific than .btn-motion:hover). */
+  .hero-actions .btn-motion:not(:disabled):hover,
+  .hero-actions .btn-motion:not(:disabled):focus-visible,
+  #copy-ca-hero:not(:disabled):hover,
+  #copy-ca-hero:not(:disabled):focus-visible {
+    animation: ui-hover-bob 0.55s ease-in-out infinite alternate;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -976,6 +984,15 @@ code {
   .nav-pill.btn-motion:hover,
   .nav-pill.btn-motion:focus-visible {
     transform: translateY(-2px) scale(1.04);
+  }
+
+  .hero-actions .btn-motion:not(:disabled):hover,
+  .hero-actions .btn-motion:not(:disabled):focus-visible,
+  #copy-ca-hero:not(:disabled):hover,
+  #copy-ca-hero:not(:disabled):focus-visible {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 6px 8px 0 rgba(61, 41, 20, 0.12);
+    filter: saturate(1.05);
   }
 }
 
