@@ -1,6 +1,6 @@
 (function () {
   /** Paste your Solana mint (contract address) here — DexScreener + Pump link + copy use this. */
-  var TOKEN_CA = "";
+  var TOKEN_CA = "3xXPujdxaEyU32ASUCuioUfsCCia3srHak2nZyhJpump";
 
   var X_URL = "https://x.com/kallionsol";
 
